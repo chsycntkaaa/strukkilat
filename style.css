@@ -1,217 +1,191 @@
+/* Reset Dasar & Layout Utama */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    background-color: #f0f2f5;
-    color: #333;
-    padding: 20px;
+  background-color: #f4f6f9;
+  padding: 20px;
+  color: #333;
 }
 
 .container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    max-width: 1000px;
-    margin: 0 auto;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
 }
 
-.form-section, .preview-section {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    flex: 1;
-    min-width: 300px;
+/* Seksi Form Input */
+.form-section {
+  flex: 1;
+  min-width: 300px;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-h2 {
-    margin-bottom: 15px;
-    color: #2c3e50;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 5px;
+.form-section h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #2c3e50;
+}
+
+.form-section h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #34495e;
 }
 
 .form-group {
-    margin-bottom: 15px;
-    display: flex;
-    flex-direction: column;
+  margin-bottom: 12px;
 }
 
 .form-group label {
-    font-weight: 600;
-    margin-bottom: 5px;
-    font-size: 0.9rem;
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 5px;
 }
 
-input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 0.95rem;
+.form-group input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
 }
 
 .form-row {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
-.form-row .form-group {
-    flex: 1;
+.form-divider {
+  border: 0;
+  border-top: 1px solid #eee;
+  margin: 15px 0;
 }
 
-hr {
-    margin: 15px 0;
-    border: 0;
-    border-top: 1px dashed #ccc;
-}
-
+/* Tombol-tombol */
 .btn {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.2s;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-.btn-primary { background-color: #2ecc71; color: white; }
-.btn-primary:hover { background-color: #27ae60; }
+.btn-primary { background-color: #3498db; color: white; }
+.btn-primary:hover { background-color: #2980b9; }
 
-.btn-secondary { background-color: #3498db; color: white; width: 100%; }
-.btn-secondary:hover { background-color: #2980b9; }
+.btn-secondary { background-color: #2ecc71; color: white; margin-bottom: 10px; }
+.btn-secondary:hover { background-color: #27ae60; }
 
-.btn-danger { background-color: #e74c3c; color: white; }
-.btn-danger:hover { background-color: #c0392b; }
-
-.btn-remove {
-    background-color: #ff4d4d;
-    color: white;
-    padding: 2px 8px;
-    font-size: 0.8rem;
-}
+.btn-success { background-color: #e67e22; color: white; }
+.btn-success:hover { background-color: #d35400; }
 
 .button-group {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
 }
 
-.button-group .btn {
-    flex: 1;
+/* Seksi Pratinjau Struk Kasir */
+.preview-section {
+  flex: 1;
+  min-width: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-    font-size: 0.9rem;
+.receipt-box {
+  width: 310px;
+  background-color: #ffffff;
+  padding: 20px;
+  border: 1px solid #ddd;
+  font-family: 'Courier New', Courier, monospace;
+  color: #000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-
-th {
-    background-color: #f8f9fa;
-}
-
-.margin-top {
-    margin-top: 15px;
-}
-
-/* Style Kertas Struk Kasir Termal */
-.receipt-paper {
-    background: #fff8eb;
-    border: 1px dashed #bbb;
-    padding: 20px;
-    width: 320px;
-    margin: 0 auto;
-    font-family: 'Courier New', Courier, monospace;
-    color: #222;
-    box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    text-align: left;
-}
-
+/* Header Struk: Rata Tengah */
 .receipt-header {
-    text-align: center;
+  text-align: center;
 }
 
-.receipt-header h3 {
-    text-transform: uppercase;
-    font-size: 1.1rem;
+.receipt-header h2 {
+  font-size: 18px;
+  font-weight: bold;
 }
 
-.receipt-header p, .receipt-footer p {
-    font-size: 0.75rem;
+.receipt-header p {
+  font-size: 12px;
+  margin-top: 2px;
 }
 
+/* Sekat Garis Putus-Putus */
+.divider-dashed {
+  border-top: 1px dashed #000;
+  margin: 10px 0;
+}
+
+/* Meta Struk: Rata Kiri */
+.receipt-meta {
+  text-align: left;
+}
+
+.receipt-meta p {
+  font-size: 12px;
+  margin: 2px 0;
+}
+
+/* Tabel Barang Struk */
+.receipt-items table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.receipt-items th {
+  text-align: left;
+  border-bottom: 1px dashed #000;
+  padding-bottom: 4px;
+}
+
+.receipt-items td {
+  padding: 4px 0;
+}
+
+.col-item { width: 40%; }
+.col-qty { width: 15%; text-align: center; }
+.col-price { width: 20%; text-align: right; }
+.col-total { width: 25%; text-align: right; }
+
+/* Summary & Total */
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin: 3px 0;
+}
+
+#receipt-grand-total {
+  font-weight: bold;
+}
+
+/* Footer Struk */
 .receipt-footer {
-    text-align: center;
-}
-
-/* Tata Letak Informasi Tanggal (Kiri) & Kasir (Kanan) Rata Pinggir */
-.receipt-info-row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.75rem;
-    text-align: left;
-    width: 100%;
-}
-
-.receipt-divider {
-    text-align: center;
-    font-weight: bold;
-    margin: 5px 0;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-/* Tata Letak Item Barang - Rata Kiri */
-.receipt-item-row {
-    font-size: 0.85rem;
-    margin-bottom: 6px;
-    text-align: left;
-}
-
-.receipt-item-name {
-    font-weight: bold;
-    text-align: left;
-}
-
-.receipt-item-detail {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.8rem;
-    padding-left: 10px;
-}
-
-.receipt-totals .row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.85rem;
-    font-weight: bold;
-    margin-top: 3px;
-}
-
-/* Sembunyikan form saat cetak */
-@media print {
-    body * {
-        visibility: hidden;
-    }
-    .preview-section, .preview-section * {
-        visibility: visible;
-    }
-    .preview-section {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        box-shadow: none;
-    }
+  text-align: center;
+  font-size: 11px;
+  margin-top: 5px;
 }
