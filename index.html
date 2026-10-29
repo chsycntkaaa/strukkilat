@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <!-- Panel Form Input -->
+        <!-- Panel Form Input Transaksi -->
         <div class="form-section">
             <h2>Input Transaksi</h2>
             <form id="receiptForm">
@@ -50,7 +50,7 @@
                     </tr>
                 </thead>
                 <tbody id="cartList">
-                    <!-- Item belanja akan muncul di sini via JavaScript -->
+                    <!-- Daftar barang akan ditambahkan secara dinamis via JavaScript -->
                 </tbody>
             </table>
 
@@ -72,16 +72,21 @@
                 <div class="receipt-header">
                     <h3 id="receiptStoreTitle">NAMA TOKO</h3>
                     <p id="receiptStoreNumber">0858 1572 1138</p>
-                 <div class="receipt-divider">--------------------------------</div>
-                     <div class="row">
-                <span id="receiptDate">Tgl: --/--/----</span>
-                <span id="receiptNameKasir">Kasir:</span>
-                 <div class="receipt-divider">--------------------------------</div>
+                    <div class="receipt-divider">--------------------------------</div>
+                    <!-- Tanggal di tepi kiri, Kasir di tepi kanan -->
+                    <div class="receipt-info-row">
+                        <span id="receiptDate">Tgl: --/--/----</span>
+                        <span id="receiptNameKasir">Kasir: -</span>
+                    </div>
+                    <div class="receipt-divider">--------------------------------</div>
                 </div>
+
                 <div id="receiptItems">
-                    <!-- Item struk dicetak di sini -->
+                    <!-- Item barang struk muncul di sini -->
                 </div>
+
                 <div class="receipt-divider">--------------------------------</div>
+
                 <div class="receipt-totals">
                     <div class="row">
                         <span>Total:</span>
@@ -96,7 +101,9 @@
                         <span id="receiptChange">Rp 0</span>
                     </div>
                 </div>
+
                 <div class="receipt-divider">--------------------------------</div>
+
                 <div class="receipt-footer">
                     <p>Terima Kasih Telah Berbelanja Di Kantin Kami!</p>
                 </div>
