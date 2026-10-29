@@ -63,6 +63,12 @@ input {
     flex: 1;
 }
 
+hr {
+    margin: 15px 0;
+    border: 0;
+    border-top: 1px dashed #ccc;
+}
+
 .btn {
     padding: 10px 15px;
     border: none;
@@ -119,19 +125,20 @@ th {
     margin-top: 15px;
 }
 
-/* Tampilan Kertas Struk Termal */
+/* Style Kertas Struk Kasir Termal */
 .receipt-paper {
     background: #fff8eb;
     border: 1px dashed #bbb;
     padding: 20px;
-    width: 280px;
+    width: 320px;
     margin: 0 auto;
     font-family: 'Courier New', Courier, monospace;
     color: #222;
     box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    text-align: left;
 }
 
-.receipt-header, .receipt-footer {
+.receipt-header {
     text-align: center;
 }
 
@@ -144,6 +151,19 @@ th {
     font-size: 0.75rem;
 }
 
+.receipt-footer {
+    text-align: center;
+}
+
+/* Tata Letak Informasi Tanggal (Kiri) & Kasir (Kanan) Rata Pinggir */
+.receipt-info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    text-align: left;
+    width: 100%;
+}
+
 .receipt-divider {
     text-align: center;
     font-weight: bold;
@@ -152,9 +172,16 @@ th {
     white-space: nowrap;
 }
 
+/* Tata Letak Item Barang - Rata Kiri */
 .receipt-item-row {
     font-size: 0.85rem;
-    margin-bottom: 3px;
+    margin-bottom: 6px;
+    text-align: left;
+}
+
+.receipt-item-name {
+    font-weight: bold;
+    text-align: left;
 }
 
 .receipt-item-detail {
@@ -172,7 +199,7 @@ th {
     margin-top: 3px;
 }
 
-/* Sembunyikan elemen non-struk saat mencetak halaman */
+/* Sembunyikan form saat cetak */
 @media print {
     body * {
         visibility: hidden;
