@@ -1,155 +1,100 @@
-// Array penampung barang belanjaan
+// Array untuk menyimpan daftar belanjaan
 let cart = [];
-
-// Elemen DOM Form Input
-const storeNameInput = document.getElementById('storeName');
-const kasirNameInput = document.getElementById('kasirName');
-const itemNameInput = document.getElementById('itemName');
-const itemQtyInput = document.getElementById('itemQty');
-const itemPriceInput = document.getElementById('itemPrice');
-const paymentAmountInput = document.getElementById('paymentAmount');
-
-// Elemen Tombol
-const addItemBtn = document.getElementById('addItemBtn');
-const resetBtn = document.getElementById('resetBtn');
-const printBtn = document.getElementById('printBtn');
-
-// Elemen Pratinjau Struk & Tabel
-const cartList = document.getElementById('cartList');
-const receiptStoreTitle = document.getElementById('receiptStoreTitle');
-const receiptDate = document.getElementById('receiptDate');
-const receiptNameKasir = document.getElementById('receiptNameKasir');
-const receiptItems = document.getElementById('receiptItems');
-const receiptTotal = document.getElementById('receiptTotal');
-const receiptPaid = document.getElementById('receiptPaid');
-const receiptChange = document.getElementById('receiptChange');
 
 // Format Angka ke Rupiah
 function formatRupiah(number) {
-    return 'Rp ' + Number(number).toLocaleString('id-ID');
+  return 'Rp ' + Number(number).toLocaleString('id-ID');
 }
 
-// Format Tanggal dan Waktu
-function getCurrentDate() {
-    const now = new Date();
-    return `Tgl: ${now.toLocaleDateString('id-ID')} ${now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}`;
+// Fungsi Memperbarui Tanggal & Waktu Real-Time
+function updateDateTime() {
+  const now = new Date();
+  const optionsDate = { year: 'numeric', month: '2-digit', day: '2-digit' };
+  const optionsTime = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+
+  const formattedDate = now.toLocaleDateString('id-ID', optionsDate);
+  const formattedTime = now.toLocaleTimeString('id-ID', optionsTime);
+
+  document.getElementById('receipt-datetime').innerText = `Tgl/Waktu: ${formattedDate} ${formattedTime}`;
 }
 
-// Inisialisasi Tanggal
-receiptDate.innerText = getCurrentDate();
+// Fungsi Menambahkan Item Ke Cart
+document.getElementById('add-item-btn').addEventListener('click', function() {
+  const nameInput = document.getElementById('item-name');
+  const qtyInput = document.getElementById('item-qty');
+  const priceInput = document.getElementById('item-price');
 
-// Event Listener: Update Nama Toko
-storeNameInput.addEventListener('input', () => {
-    receiptStoreTitle.innerText = storeNameInput.value.trim() || 'NAMA TOKO';
+  const name = nameInput.value.trim();
+  const qty = parseInt(qtyInput.value);
+  const price = parseFloat(priceInput.value);
+
+  if (name === '' || isNaN(qty) || isNaN(price) || qty <= 0 || price < 0) {
+    alert('Harap isi nama barang, jumlah, dan harga dengan benar!');
+    return;
+  }
+
+  // Tambahkan item ke array
+  cart.push({ name, qty, price, total: qty * price });
+
+  // Kosongkan input item
+  nameInput.value = '';
+  qtyInput.value = 1;
+  priceInput.value = '';
+
+  renderReceipt();
 });
 
-// Event Listener: Update Nama Kasir
-kasirNameInput.addEventListener('input', () => {
-    const name = kasirNameInput.value.trim();
-    receiptNameKasir.innerText = name ? `Kasir: ${name}` : 'Kasir: -';
-});
+// Fungsi Merender/Memperbarui Tampilan Struk
+function renderReceipt() {
+  // Update Informasi Header & Kasir
+  document.getElementById('receipt-shop-name').innerText = document.getElementById('shop-name').value || 'Kedai Kopi Pelajar';
+  document.getElementById('receipt-shop-phone').innerText = document.getElementById('shop-phone').value || '0812-3456-7890';
+  document.getElementById('receipt-cashier').innerText = 'Kasir: ' + (document.getElementById('cashier-name').value || 'Budi');
 
-// Event Listener: Tambah Barang
-addItemBtn.addEventListener('click', () => {
-    const name = itemNameInput.value.trim();
-    const qty = parseInt(itemQtyInput.value);
-    const price = parseFloat(itemPriceInput.value);
+  updateDateTime();
 
-    if (!name || isNaN(qty) || isNaN(price) || qty <= 0 || price < 0) {
-        alert('Mohon isi nama barang, jumlah, dan harga satuan dengan benar!');
-        return;
-    }
+  // Update Daftar Barang
+  const itemsList = document.getElementById('items-list');
+  itemsList.innerHTML = '';
 
-    const subtotal = qty * price;
-    cart.push({ name, qty, price, subtotal });
+  let grandTotal = 0;
 
-    // Reset Form Input Barang Saja
-    itemNameInput.value = '';
-    itemQtyInput.value = '1';
-    itemPriceInput.value = '';
-    itemNameInput.focus();
+  cart.forEach(item => {
+    grandTotal += item.total;
 
-    updateUI();
-});
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td class="col-item">${item.name}</td>
+      <td class="col-qty">${item.qty}</td>
+      <td class="col-price">${item.price.toLocaleString('id-ID')}</td>
+      <td class="col-total">${item.total.toLocaleString('id-ID')}</td>
+    `;
+    itemsList.appendChild(row);
+  });
 
-// Fungsi Hapus Barang
-function removeItem(index) {
-    cart.splice(index, 1);
-    updateUI();
+  // Hitung Total, Bayar, dan Kembali
+  const payAmount = parseFloat(document.getElementById('pay-amount').value) || 0;
+  const change = payAmount - grandTotal;
+
+  document.getElementById('receipt-grand-total').innerText = formatRupiah(grandTotal);
+  document.getElementById('receipt-pay').innerText = formatRupiah(payAmount);
+  document.getElementById('receipt-change').innerText = formatRupiah(change > 0 ? change : 0);
 }
 
-// Hitung Total Belanja
-function calculateTotal() {
-    return cart.reduce((sum, item) => sum + item.subtotal, 0);
-}
+// Tombol Update Struk
+document.getElementById('generate-btn').addEventListener('click', renderReceipt);
 
-// Event Listener: Update Kembalian Realtime
-paymentAmountInput.addEventListener('input', updateReceiptTotals);
+// Tombol Unduh Struk Menjadi Gambar (PNG)
+document.getElementById('download-btn').addEventListener('click', function() {
+  const receiptElement = document.getElementById('receipt-preview');
 
-// Update Tampilan Tabel & Struk
-function updateUI() {
-    // 1. Render Tabel Form Input Kasir
-    cartList.innerHTML = '';
-    cart.forEach((item, index) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${item.name}</td>
-            <td>${item.qty}</td>
-            <td>${formatRupiah(item.subtotal)}</td>
-            <td><button class="btn btn-remove" onclick="removeItem(${index})">X</button></td>
-        `;
-        cartList.appendChild(tr);
-    });
-
-    // 2. Render Barang di Kertas Struk (Nama barang rata kiri)
-    receiptItems.innerHTML = '';
-    cart.forEach((item) => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'receipt-item-row';
-        itemDiv.innerHTML = `
-            <div class="receipt-item-name">${item.name}</div>
-            <div class="receipt-item-detail">
-                <span>${item.qty} x ${formatRupiah(item.price)}</span>
-                <span>${formatRupiah(item.subtotal)}</span>
-            </div>
-        `;
-        receiptItems.appendChild(itemDiv);
-    });
-
-    updateReceiptTotals();
-}
-
-// Update Total, Bayar, dan Kembalian
-function updateReceiptTotals() {
-    const total = calculateTotal();
-    const paid = parseFloat(paymentAmountInput.value) || 0;
-    const change = paid - total;
-
-    receiptTotal.innerText = formatRupiah(total);
-    receiptPaid.innerText = formatRupiah(paid);
-    receiptChange.innerText = formatRupiah(change > 0 ? change : 0);
-}
-
-// Reset Form
-resetBtn.addEventListener('click', () => {
-    if (confirm('Apakah Anda yakin ingin mengosongkan semua data transaksi?')) {
-        cart = [];
-        storeNameInput.value = '';
-        kasirNameInput.value = '';
-        paymentAmountInput.value = '';
-        receiptStoreTitle.innerText = 'NAMA TOKO';
-        receiptNameKasir.innerText = 'Kasir: -';
-        receiptDate.innerText = getCurrentDate();
-        updateUI();
-    }
+  html2canvas(receiptElement, { scale: 2 }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'struk-belanja.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
 });
 
-// Cetak Struk
-printBtn.addEventListener('click', () => {
-    if (cart.length === 0) {
-        alert('Tambahkan minimal satu barang sebelum mencetak struk!');
-        return;
-    }
-    receiptDate.innerText = getCurrentDate();
-    window.print();
-});
+// Jalankan render awal saat halaman dimuat
+renderReceipt();
