@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StrukKilat - Pembuat Struk Belanja Instan</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Panel Form Input -->
+        <div class="form-section">
+            <h2>Input Transaksi</h2>
+            <form id="receiptForm">
+                <div class="form-group">
+                    <label for="storeName">Nama Toko / Kelompok:</label>
+                    <input type="text" id="storeName" placeholder="Contoh: Kedai Kelompok 3" required>
+                </div>
+                
+                <hr>
+                
+                <div class="form-group">
+                    <label for="itemName">Nama Barang:</label>
+                    <input type="text" id="itemName" placeholder="Contoh: Keripik Ubi Ungu">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="itemQty">Jumlah:</label>
+                        <input type="number" id="itemQty" min="1" value="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="itemPrice">Harga Satuan (Rp):</label>
+                        <input type="number" id="itemPrice" min="0" placeholder="10000">
+                    </div>
+                </div>
+                <button type="button" id="addItemBtn" class="btn btn-secondary">+ Tambah Barang</button>
+            </form>
+
+            <table id="cartTable">
+                <thead>
+                    <tr>
+                        <th>Barang</th>
+                        <th>Qty</th>
+                        <th>Subtotal</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="cartList">
+                    <!-- Item belanja akan muncul di sini via JavaScript -->
+                </tbody>
+            </table>
+
+            <div class="form-group margin-top">
+                <label for="paymentAmount">Jumlah Uang Bayar (Rp):</label>
+                <input type="number" id="paymentAmount" placeholder="0">
+            </div>
+
+            <div class="button-group">
+                <button type="button" id="resetBtn" class="btn btn-danger">Reset</button>
+                <button type="button" id="printBtn" class="btn btn-primary">Cetak / Simpan PDF</button>
+            </div>
+        </div>
+
+        <!-- Panel Pratinjau Struk -->
+        <div class="preview-section">
+            <h2>Pratinjau Struk</h2>
+            <div id="receiptPaper" class="receipt-paper">
+                <div class="receipt-header">
+                    <h3 id="receiptStoreTitle">NAMA TOKO</h3>
+                    <p>Bazar Kewirausahaan Siswa</p>
+                    <p id="receiptDate">Tgl: --/--/----</p>
+                </div>
+                <div class="receipt-divider">--------------------------------</div>
+                <div id="receiptItems">
+                    <!-- Item struk dicetak di sini -->
+                </div>
+                <div class="receipt-divider">--------------------------------</div>
+                <div class="receipt-totals">
+                    <div class="row">
+                        <span>Total:</span>
+                        <span id="receiptTotal">Rp 0</span>
+                    </div>
+                    <div class="row">
+                        <span>Bayar:</span>
+                        <span id="receiptPaid">Rp 0</span>
+                    </div>
+                    <div class="row">
+                        <span>Kembali:</span>
+                        <span id="receiptChange">Rp 0</span>
+                    </div>
+                </div>
+                <div class="receipt-divider">--------------------------------</div>
+                <div class="receipt-footer">
+                    <p>Terima Kasih Atas Kunjungan Anda!</p>
+                    <p>-- Dibuat via StrukKilat --</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
