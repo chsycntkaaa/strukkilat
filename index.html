@@ -1,116 +1,143 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StrukKilat - Pembuat Struk Belanja Instan</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StrukKilat - Web Kasir & Generator Struk</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Pustaka CDN html2canvas untuk fitur unduh gambar -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <!-- Panel Form Input Transaksi -->
-        <div class="form-section">
-            <h2>Input Transaksi</h2>
-            <form id="receiptForm">
-                <div class="form-group">
-                    <label for="storeName">Nama Toko:</label>
-                    <input type="text" id="storeName" placeholder="Contoh: Kedai Kesukaanmu" required>
-                </div>
-                <div class="form-group">
-                    <label for="kasirName">Nama Kasir:</label>
-                    <input type="text" id="kasirName" placeholder="Contoh: Echa">
-                </div>
-                
-                <hr>
-                
-                <div class="form-group">
-                    <label for="itemName">Nama Barang:</label>
-                    <input type="text" id="itemName" placeholder="Contoh: Es Teh">
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="itemQty">Jumlah:</label>
-                        <input type="number" id="itemQty" min="1" value="1">
-                    </div>
-                    <div class="form-group">
-                        <label for="itemPrice">Harga Satuan (Rp):</label>
-                        <input type="number" id="itemPrice" min="0" placeholder="10000">
-                    </div>
-                </div>
-                <button type="button" id="addItemBtn" class="btn btn-secondary">+ Tambah Barang</button>
-            </form>
 
-            <table id="cartTable">
-                <thead>
-                    <tr>
-                        <th>Barang</th>
-                        <th>Qty</th>
-                        <th>Subtotal</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="cartList">
-                    <!-- Daftar barang akan ditambahkan secara dinamis via JavaScript -->
-                </tbody>
-            </table>
+  <div class="container">
+    <!-- SEKSI INPUT FORM -->
+    <div class="form-section">
+      <h2>Input Data Transaksi</h2>
+      
+      <!-- Informasi Toko & Kasir -->
+      <div class="form-group">
+        <label for="shop-name">Nama Kedai / Toko</label>
+        <input type="text" id="shop-name" value="Kedai Kopi Pelajar">
+      </div>
 
-            <div class="form-group margin-top">
-                <label for="paymentAmount">Jumlah Uang Bayar (Rp):</label>
-                <input type="number" id="paymentAmount" placeholder="0">
-            </div>
+      <div class="form-group">
+        <label for="shop-phone">Nomor Telepon</label>
+        <input type="text" id="shop-phone" value="0812-3456-7890">
+      </div>
 
-            <div class="button-group">
-                <button type="button" id="resetBtn" class="btn btn-danger">Reset</button>
-                <button type="button" id="printBtn" class="btn btn-primary">Cetak / Simpan PDF</button>
-            </div>
+      <div class="form-group">
+        <label for="cashier-name">Nama Kasir</label>
+        <input type="text" id="cashier-name" value="Budi">
+      </div>
+
+      <hr class="form-divider">
+
+      <!-- Input Barang -->
+      <h3>Tambah Item Barang</h3>
+      <div class="form-group">
+        <label for="item-name">Nama Barang</label>
+        <input type="text" id="item-name" placeholder="Contoh: Es Teh Manis">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="item-qty">Jumlah (Qty)</label>
+          <input type="number" id="item-qty" min="1" value="1">
         </div>
-
-        <!-- Panel Pratinjau Struk -->
-        <div class="preview-section">
-            <h2>Pratinjau Struk</h2>
-            <div id="receiptPaper" class="receipt-paper">
-                <div class="receipt-header">
-                    <h3 id="receiptStoreTitle">NAMA TOKO</h3>
-                    <p id="receiptStoreNumber">0858 1572 1138</p>
-                    <div class="receipt-divider">--------------------------------</div>
-                    <!-- Tanggal di tepi kiri, Kasir di bawah tanggal di tepi kiri -->
-                    <div class="receipt-info-row">
-                        <span id="receiptDate">Tgl: --/--/----</span>
-                        <span id="receiptNameKasir">Kasir: -</span>
-                    </div>
-                    <div class="receipt-divider">--------------------------------</div>
-                </div>
-
-                <div id="receiptItems">
-                    <!-- Item barang struk muncul di sini -->
-                </div>
-
-                <div class="receipt-divider">--------------------------------</div>
-
-                <div class="receipt-totals">
-                    <div class="row">
-                        <span>Total:</span>
-                        <span id="receiptTotal">Rp 0</span>
-                    </div>
-                    <div class="row">
-                        <span>Bayar:</span>
-                        <span id="receiptPaid">Rp 0</span>
-                    </div>
-                    <div class="row">
-                        <span>Kembali:</span>
-                        <span id="receiptChange">Rp 0</span>
-                    </div>
-                </div>
-
-                <div class="receipt-divider">--------------------------------</div>
-
-                <div class="receipt-footer">
-                    <p>Terima Kasih Telah Berbelanja Di Kantin Kami!</p>
-                </div>
-            </div>
+        <div class="form-group">
+          <label for="item-price">Harga Satuan (Rp)</label>
+          <input type="number" id="item-price" min="0" placeholder="5000">
         </div>
+      </div>
+
+      <button id="add-item-btn" class="btn btn-secondary">Tambah Barang</button>
+
+      <hr class="form-divider">
+
+      <!-- Pembayaran -->
+      <div class="form-group">
+        <label for="pay-amount">Uang Dibayar (Rp)</label>
+        <input type="number" id="pay-amount" min="0" placeholder="50000">
+      </div>
+
+      <div class="button-group">
+        <button id="generate-btn" class="btn btn-primary">Update Struk</button>
+        <button id="download-btn" class="btn btn-success">Unduh Struk (PNG)</button>
+      </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- SEKSI PRATINJAU STRUK -->
+    <div class="preview-section">
+      <div id="receipt-preview" class="receipt-box">
+        
+        <!-- Header: Rata Tengah -->
+        <div class="receipt-header">
+          <h2 id="receipt-shop-name">Kedai Kopi Pelajar</h2>
+          <p id="receipt-shop-phone">0812-3456-7890</p>
+        </div>
+
+        <!-- Sekat Garis Putus-putus -->
+        <div class="divider-dashed"></div>
+
+        <!-- Info Transaksi: Rata Kiri -->
+        <div class="receipt-meta">
+          <p id="receipt-datetime">Tgl/Waktu: -</p>
+          <p id="receipt-cashier">Kasir: Budi</p>
+        </div>
+
+        <!-- Sekat Garis Putus-putus -->
+        <div class="divider-dashed"></div>
+
+        <!-- Daftar Item Belanja -->
+        <div class="receipt-items">
+          <table id="items-table">
+            <thead>
+              <tr>
+                <th class="col-item">Item</th>
+                <th class="col-qty">Qty</th>
+                <th class="col-price">Harga</th>
+                <th class="col-total">Total</th>
+              </tr>
+            </thead>
+            <tbody id="items-list">
+              <!-- Item barang dimasukkan via Javascript -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Sekat Garis Putus-putus -->
+        <div class="divider-dashed"></div>
+
+        <!-- Total & Pembayaran -->
+        <div class="receipt-summary">
+          <div class="summary-row">
+            <span>Total Belanja:</span>
+            <span id="receipt-grand-total">Rp 0</span>
+          </div>
+          <div class="summary-row">
+            <span>Tunai:</span>
+            <span id="receipt-pay">Rp 0</span>
+          </div>
+          <div class="summary-row">
+            <span>Kembali:</span>
+            <span id="receipt-change">Rp 0</span>
+          </div>
+        </div>
+
+        <!-- Sekat Garis Putus-putus -->
+        <div class="divider-dashed"></div>
+
+        <!-- Footer Struk -->
+        <div class="receipt-footer">
+          <p>Terima Kasih Atas Kunjungan Anda!</p>
+          <p>--- Selamat Berbelanja ---</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
